@@ -1,6 +1,5 @@
 package de.pacheco.fdpmockup
 
-//import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,15 +10,11 @@ import android.widget.RelativeLayout
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.MediaItem
+import androidx.media3.datasource.RawResourceDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-import androidx.media3.datasource.RawResourceDataSource
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
-import android.view.View
 
-
-class MainActivity : AppCompatActivity() {
+class Main: AppCompatActivity() {
     private var player: ExoPlayer? = null
     private var videoContainer: FrameLayout? = null
     private var heightInput: EditText? = null
@@ -36,9 +31,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Immersive Mode aktivieren
-        getWindow().getDecorView()
-            .setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN)
 
         playerView = findViewById<PlayerView?>(R.id.player_view)
         videoContainer = findViewById<FrameLayout?>(R.id.video_container)
@@ -89,13 +81,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupTextWatchers() {
         val textWatcher: TextWatcher =
             object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
@@ -111,22 +97,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupSwitch() {
         formatSwitch?.setOnCheckedChangeListener(
-            CompoundButton.OnCheckedChangeListener { buttonView: CompoundButton?,
-                                                     isChecked: Boolean ->
+            CompoundButton.OnCheckedChangeListener {
+                    buttonView: CompoundButton?,
+                    isChecked: Boolean ->
                 formatSwitch?.setText(if (isChecked) "21:9" else "16:9")
                 updateVideoFormat()
             })
     }
 
-    private fun updateBoxSize(
-        heightCm: Double,
-        aspectRatioWidth: Double,
-        aspectRatioHeight: Double
-    ) {
-//      val densityDpi = getResources().getDisplayMetrics().densityDpi //das ist falsch wenn die im AOSP falsch eingetragen sind
-        val metrics = DisplayMetrics()
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics)
-        val densityDpi = metrics.ydpi
+    private fun updateBoxSize(heightCm: Double, aspectRatioWidth: Double, aspectRatioHeight: Double) {
+//      val densityDpi = getResources().getDisplayMetrics().densityDpi
+        val densityDpi = getResources().getDisplayMetrics().densityDpi
+//      val metrics = DisplayMetrics()
+//            getWindowManager().getDefaultDisplay().getRealMetrics(metrics)
+//      val mDisplayMetrics = getResources().getDisplayMetrics()
+//      val mDPI = (float) mDisplayMetrics.densityDpi
+//      val measurement = distance / mDPI
 
         val heightPx: Double = heightCm * densityDpi / 2.54
         val widthPx = heightPx * (aspectRatioWidth / aspectRatioHeight)

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
+    android:backgroundTint="#000000"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -10,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="#800080"
+        android:background="@drawable/border"
         android:foregroundGravity="center">
 
         <androidx.media3.ui.PlayerView
@@ -19,15 +21,15 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:background="#000000"
+            android:background="@drawable/border"
             android:foregroundGravity="center" />
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <EditText
@@ -35,24 +37,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Höhe (cm)"
-            android:textColorHint="@color/purple_500"
-            />
+            android:textColorHint="@color/purple_500" />
 
         <EditText
             android:id="@+id/aspect_ratio_height_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Seitenverhältnis Höhe"
-            android:textColorHint="@color/purple_500"
-            />
+            android:textColorHint="@color/purple_500" />
 
         <EditText
             android:id="@+id/aspect_ratio_width_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Seitenverhältnis Breite"
-            android:textColorHint="@color/purple_500"
-            />
+            android:textColorHint="@color/purple_500" />
 
         <Button
             android:id="@+id/button_12cm_21_9"
@@ -82,9 +81,8 @@
             android:id="@+id/format_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="16:9"
             android:checked="false"
-            android:textColor="@color/purple_500"
-            />
+            android:text="16:9"
+            android:textColor="@color/purple_500" />
     </LinearLayout>
 </RelativeLayout>
