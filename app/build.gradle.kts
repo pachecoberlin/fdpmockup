@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "de.pacheco.fdpmockup"
+    namespace = "de.pacheco.fpdmockup"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "de.pacheco.fdpmockup"
+        applicationId = "de.pacheco.fpdmockup"
         minSdk = 34
         targetSdk = 35
         versionCode = 1

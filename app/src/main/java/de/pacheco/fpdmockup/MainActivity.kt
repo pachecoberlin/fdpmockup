@@ -1,4 +1,4 @@
-package de.pacheco.fdpmockup
+package de.pacheco.fpdmockup
 
 //import android.net.Uri
 import android.os.Bundle
