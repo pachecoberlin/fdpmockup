@@ -54,6 +54,7 @@
             android:id="@+id/dpi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:hint="DPI" />
 
         <TextView
@@ -65,6 +66,7 @@
             android:id="@+id/height_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:hint="Höhe (cm)" />
 
         <TextView
@@ -76,6 +78,7 @@
             android:id="@+id/aspect_ratio_width_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:hint="Seitenverhältnis Breite" />
 
         <TextView
@@ -87,6 +90,7 @@
             android:id="@+id/aspect_ratio_height_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:hint="Seitenverhältnis Höhe" />
 
         <Button
