@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Fdpmockup" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-<!--        <item name="colorPrimary">@color/purple_500</item>-->
-<!--        <item name="colorPrimaryVariant">@color/purple_700</item>-->
+        <item name="colorPrimary">#262525</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -19,7 +19,5 @@
         <item name="android:colorForeground">@color/white</item>
         <item name="android:thumbTint">@color/white</item>
         <item name="android:trackTint">@color/white</item>
-
-        <!-- Customize your theme here. -->
     </style>
 </resources>
