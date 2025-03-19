@@ -1,6 +1,7 @@
 package de.pacheco.fpdmockup
 
-//import android.net.Uri
+import android.content.ContentResolver
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,10 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.media3.common.MediaItem
-import androidx.media3.datasource.RawResourceDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-
 
 class MainActivity : AppCompatActivity() {
     private var player: ExoPlayer? = null
@@ -38,16 +37,20 @@ class MainActivity : AppCompatActivity() {
     private var isTypingText = false
 
     private val mediaItem16_9: MediaItem =
-        MediaItem.fromUri(RawResourceDataSource.buildRawResourceUri(R.raw.bbb16))
+        MediaItem.fromUri(
+            Uri.Builder().scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .path(R.raw.bbb16.toString()).build()
+        )
+
     private val mediaItem21_9 =
-        MediaItem.fromUri(RawResourceDataSource.buildRawResourceUri(R.raw.bbb21))
+        MediaItem.fromUri(
+            Uri.Builder().scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .path(R.raw.bbb21.toString()).build()
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Immersive Mode aktivieren
-//        getWindow().getDecorView()
-//            .setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN)
         hideSystemUI()
 
         playerView = findViewById<PlayerView?>(R.id.player_view)
