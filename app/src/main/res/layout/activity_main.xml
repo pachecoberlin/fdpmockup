@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,11 +45,21 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DPI:" />
+
         <EditText
             android:id="@+id/dpi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="DPI" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Höhe (cm):" />
 
         <EditText
             android:id="@+id/height_input"
@@ -56,11 +67,21 @@
             android:layout_height="wrap_content"
             android:hint="Höhe (cm)" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seitenverhältnis Höhe:" />
+
         <EditText
             android:id="@+id/aspect_ratio_height_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Seitenverhältnis Höhe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seitenverhältnis Breite:" />
 
         <EditText
             android:id="@+id/aspect_ratio_width_input"
