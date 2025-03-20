@@ -7,13 +7,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.DisplayMetrics
 import android.view.View
+import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Switch
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.media3.common.MediaItem
@@ -23,7 +24,7 @@ import androidx.media3.ui.PlayerView
 class MainActivity : AppCompatActivity() {
     private var player: ExoPlayer? = null
     private var videoContainer: FrameLayout? = null
-    private var hideUi: View? = null
+    private var hideUi: Button? = null
     private var dpi: EditText? = null
     private var heightInput: EditText? = null
     private var aspectRatioWidthInput: EditText? = null
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         playerView = findViewById<PlayerView?>(R.id.player_view)
         videoContainer = findViewById<FrameLayout?>(R.id.video_container)
-        hideUi = findViewById<View?>(R.id.hideUI)
+        hideUi = findViewById<Button>(R.id.hideUI)
         dpi = findViewById<EditText?>(R.id.dpi)
         heightInput = findViewById<EditText?>(R.id.height_input)
         aspectRatioWidthInput = findViewById<EditText?>(R.id.aspect_ratio_width_input)
@@ -75,25 +76,23 @@ class MainActivity : AppCompatActivity() {
         btn12_175_9 = findViewById<View?>(R.id.button_12cm_17_5_9)
         changeVideo = findViewById<View?>(R.id.changeVideo)
 
-        player = ExoPlayer.Builder(this).build()
-        playerView?.setPlayer(player)
-
-//      val videoUri: Uri =
-//        android.net.Uri.parse(
-//            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-//      val mediaItem: MediaItem = MediaItem.fromUri(videoUri)
-
-        player?.setMediaItem(mediaItem16_9)
-        player?.prepare()
-        player?.play()
-
+        startPlayer()
         setupButtons()
         setupTextWatchers()
         setupSwitch()
-
-        isTypingText = true
         updateBoxSize(12.0, 21.0, 9.0)
-        isTypingText = false
+    }
+
+    private fun startPlayer() {
+        player = ExoPlayer.Builder(this).build()
+        playerView?.setPlayer(player)
+        //      val videoUri: Uri =
+        //        android.net.Uri.parse(
+        //            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+        //      val mediaItem: MediaItem = MediaItem.fromUri(videoUri)
+        player?.setMediaItem(mediaItem16_9)
+        player?.prepare()
+        player?.play()
     }
 
     private fun hideSystemUI() {
@@ -104,12 +103,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        changeVideo?.setOnClickListener{_ ->
+        changeVideo?.setOnClickListener { _ ->
             changeVideo()
         }
         hideUi?.setOnClickListener { v: View? ->
-            val ui = findViewById<View?>(R.id.ui)
-            ui.visibility = if (ui.visibility == View.INVISIBLE) View.VISIBLE else View.INVISIBLE
+            hideUi()
         }
         btn12_21_9?.setOnClickListener { v: View? ->
             updateBoxSize(12.0, 21.0, 9.0)
@@ -122,6 +120,17 @@ class MainActivity : AppCompatActivity() {
         }
         btn12_175_9?.setOnClickListener { v: View? ->
             updateBoxSize(12.0, 17.5, 9.0)
+        }
+    }
+
+    private fun hideUi() {
+        val ui = findViewById<View?>(R.id.ui)
+        if (ui?.visibility == View.INVISIBLE) {
+            ui.visibility = View.VISIBLE
+            hideUi?.setTextColor(ContextCompat.getColor(this, R.color.white))
+        } else {
+            ui?.visibility = View.INVISIBLE
+            hideUi?.setTextColor(ContextCompat.getColor(this, R.color.halfblack))
         }
     }
 
@@ -138,14 +147,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupTextWatchers() {
         val textWatcher: TextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence?, start: Int, count: Int, after: Int
-            ) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 isTypingText = true
                 updateBoxFromInputs()
@@ -158,8 +161,11 @@ class MainActivity : AppCompatActivity() {
         aspectRatioHeightInput?.addTextChangedListener(textWatcher)
         aspectRatioWidthInput?.addTextChangedListener(textWatcher)
 
+//beides falsch wenn die im AOSP falsch eingetragen sind
+//      val densityDpi = getResources().getDisplayMetrics().densityDpi
+//        val densityDpi = DisplayMetrics.DENSITY_DEFAULT * windowManager.getCurrentWindowMetrics().getDensity()
         val metrics = DisplayMetrics()
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics)
+        windowManager.getDefaultDisplay().getRealMetrics(metrics)
         val densityDpi = metrics.ydpi
         dpi?.setText(densityDpi.toString())
     }
@@ -178,23 +184,15 @@ class MainActivity : AppCompatActivity() {
             val aspectRatioHeight: Double = aspectRatioHeightInput?.getText().toString().toDouble()
             updateBoxSize(heightCm, aspectRatioWidth, aspectRatioHeight)
         } catch (e: NumberFormatException) {
-//            Toast.makeText(this, "Wrong Format", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun updateBoxSize(
         heightCm: Double, aspectRatioWidth: Double, aspectRatioHeight: Double
     ) {
-//      val densityDpi = getResources().getDisplayMetrics().densityDpi //das ist falsch wenn die im AOSP falsch eingetragen sind
-        val metrics = DisplayMetrics()
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics)
-//        windowManager.currentWindowMetrics.density
         val densityDpi = dpi?.text.toString().toFloat()
-//        Configuration.densityDpi
-
         val heightPx: Double = heightCm * densityDpi / 2.54
         val widthPx = heightPx * (aspectRatioWidth / aspectRatioHeight)
-
         val params: RelativeLayout.LayoutParams =
             RelativeLayout.LayoutParams(widthPx.toInt(), heightPx.toInt())
         params.leftMargin = (getResources().getDisplayMetrics().widthPixels - widthPx.toInt()) / 2
